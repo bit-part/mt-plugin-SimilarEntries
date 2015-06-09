@@ -1,0 +1,36 @@
+id: SimilarEntries
+name: SimilarEntries
+version: 0.0.1
+description: <__trans phrase='description of SimilarEntries'>
+plugin_link: https://github.com/bit-part/mt-plugin-SimilarEntries/
+author_name: <__trans phrase='bit part LLC'>
+author_link: http://bit-part.net/
+l10n_class: SimilarEntries::L10N
+config_template: config_template.tmpl
+# blog_config_template: blog_config_template.tmpl
+# system_config_template: system_config_template.tmpl
+settings:
+    related_json_url:
+        default:
+    related_show_json_url:
+        default:
+    similar_entries_show_js:
+        default:
+tags:
+    block:
+        SimilarEntries: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries
+    function:
+        SimilarEntriesCreateJSON: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries_create_json
+        SimilarEntriesShow: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries_show
+#         IfTag?: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_if
+#     modifier:
+#         similar_entries: $SimilarEntries::SimilarEntries::ContextHandlers::similar_entries
+# callbacks:
+#     #----- Transformer
+#     template_source.edit_entry: $SimilarEntries::SimilarEntries::Plugin::hdlr_edit_entry_source
+#     template_output.edit_entry: $SimilarEntries::SimilarEntries::Plugin::hdlr_edit_entry_output
+#     template_param.edit_entry: $tSimilarEntriesest::SimilarEntries::Plugin::hdlr_edit_entry_param
+#     #----- Hook
+#     cms_pre_save.entry: $SimilarEntries::SimilarEntries::Plugin::hdlr_cms_pre_save_entry
+#     cms_post_save.entry: $SimilarEntries::SimilarEntries::Plugin::hdlr_cms_post_save_entry
+#     build_page: $SimilarEntries::SimilarEntries::Plugin::hdlr_cb_build_page
