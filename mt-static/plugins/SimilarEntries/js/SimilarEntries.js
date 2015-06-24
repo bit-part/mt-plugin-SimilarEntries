@@ -46,11 +46,19 @@ similarEntries.show = function(config){
         for (var key1 in config.data) {
             for (var key2 in similarEntries['config']['data'][key1]) {
                 if (json[key1][key2]) {
-                    Array.prototype.push.apply(similarIDs, json[key1][key2]);
+                    if (config.includeCurrent == 0 && json[key1][key2] == config.currentId) {
+                        continue;
+                    }
+                    else {
+                        Array.prototype.push.apply(similarIDs, json[key1][key2]);
+                    }
                 }
             }
         }
         for (var i = 0, l = similarIDs.length; i < l; i++) {
+            if (config.includeCurrent == 0 && config.currentId == similarIDs[i]) {
+                continue;
+            }
             var id = 'e' + similarIDs[i];
             if (similarRank[id]) {
                 similarRank[id]++;
