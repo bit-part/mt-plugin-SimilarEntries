@@ -44,7 +44,7 @@ similarEntries.show = function(config){
         var similarRank = {};
         var similarRankSort = [];
         for (var key1 in config.data) {
-            for (var key2 in similarEntries['config']['data'][key1]) {
+            for (var key2 in config['data'][key1]) {
                 if (json[key1][key2]) {
                     if (config.includeCurrent == 0 && json[key1][key2] == config.currentId) {
                         continue;
