@@ -199,7 +199,7 @@ sub hdlr_similar_entries_show {
     my $entry_id = $entry->id;
 
     my $fields = $args->{fields}
-        or return $ctx->error($plugin->translate('The fields modifier is required.'));
+        or return $ctx->error($plugin->translate('The [_1] modifier is required.', 'fields'));
 
     my $fields_json = {};
     foreach (split(/,/, $fields)) {

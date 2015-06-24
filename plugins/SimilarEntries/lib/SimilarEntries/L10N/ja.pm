@@ -12,7 +12,7 @@ use vars qw( %Lexicon );
     'Make a list of related entries.' => '関連記事をリストアップするプラグイン',
 
     # ContextHandlers.pm
-    'The fields modifier is required.' => 'fieldsモディファイアは必須です。'
+    'The [_1] modifier is required.' => '[_1]モディファイアは必須です。'
 );
 
 1;
