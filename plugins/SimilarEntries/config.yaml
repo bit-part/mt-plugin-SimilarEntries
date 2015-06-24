@@ -8,9 +8,9 @@ author_link: http://bit-part.net/
 l10n_class: SimilarEntries::L10N
 tags:
     block:
-        SimilarEntries: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries
+        SimilarEntriesTemplateJSON: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries_template_json
     function:
-        SimilarEntriesCreateJSON: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries_create_json
+        SimilarEntriesRelateJSON: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries_relate_json
         SimilarEntriesShow: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries_show
 #         IfTag?: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_if
 #     modifier:

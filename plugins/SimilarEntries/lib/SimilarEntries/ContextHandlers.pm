@@ -47,7 +47,7 @@ doLog('$value: '.$value);
 }
 
 #----- Tags
-sub hdlr_similar_entries {
+sub hdlr_similar_entries_template_json {
     my ($ctx, $args, $cond) = @_;
 
     my $blog_id = $ctx->stash('blog_id');
@@ -82,7 +82,7 @@ sub hdlr_similar_entries {
     return JSON::to_json($json);
 }
 
-sub hdlr_similar_entries_create_json {
+sub hdlr_similar_entries_relate_json {
     my ($ctx, $args) = @_;
 
     my $plugin = plugin();
