@@ -182,6 +182,8 @@ sub hdlr_similar_entries_show {
 
     my $blog_id = $ctx->stash('blog_id');
     my $parent_id = $ctx->stash('blog')->parent_id;
+    # JavaScript Options
+    my $script_url = $args->{script_url} ? $args->{script_url} : File::Spec->catfile($app->static_path, $plugin->envelope, 'js', 'SimilarEntries.js');
 
     if (my $conf_js = get_setting('similar_entries_show_js', $blog_id, $parent_id)) {
         return $conf_js;
@@ -191,6 +193,7 @@ sub hdlr_similar_entries_show {
 
     my $limit = $args->{limit} ? $args->{limit} : 10;
     my $out = <<"_EOD_";
+<script type="text/javascript" src="$script_url"></script>
 <script>
 </script>
 _EOD_
