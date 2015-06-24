@@ -139,8 +139,13 @@ sub hdlr_similar_entries_show {
         or return $ctx->_no_entry_error();
     my $entry_id = $entry->id;
 
+    # Required modifiers
     my $fields = $args->{fields}
         or return $ctx->error($plugin->translate('The [_1] modifier is required.', 'fields'));
+    my $relation_url = $args->{relation_url}
+        or return $ctx->error($plugin->translate('The [_1] modifier is required.', 'relation_url'));
+    my $template_url = $args->{template_url}
+        or return $ctx->error($plugin->translate('The [_1] modifier is required.', 'template_url'));
 
     my $fields_json = {};
     foreach (split(/,/, $fields)) {
@@ -184,12 +189,35 @@ sub hdlr_similar_entries_show {
 
     # JavaScript Options
     my $script_url = $args->{script_url} ? $args->{script_url} : File::Spec->catfile($app->static_path, $plugin->envelope, 'js', 'SimilarEntries.js');
-
-
     my $limit = $args->{limit} ? $args->{limit} : 10;
+    my $target_selector = $args->{target_selector} || '#similar-entries';
+    my $include_current = $args->{include_current} || 0;
+    my $priority = $args->{priority} || '';
+    my $first = $args->{first} || '';
+    my $last = $args->{last} || '';
+    my $each_function = $args->{each_function} || 'null';
+
+    $first =~ s/^\s+|\s+$//g;
+    $last =~ s/^\s+|\s+$//g;
+    $each_function =~ s/^\s+|\s+$//g;
+
     my $out = <<"_EOD_";
 <script type="text/javascript" src="$script_url"></script>
 <script>
+similarEntries.config = {
+    currentId: $entry_id,
+    limit: $limit,
+    relationURL: '$relation_url',
+    templateURL: '$template_url',
+    targetSelector: '$target_selector',
+    data: $fields_json_str,
+    includeCurrent: $include_current,
+    priority: '$priority',
+    first: '$first',
+    last: '$last',
+    each: $each_function
+};
+similarEntries.show(similarEntries.config);
 </script>
 _EOD_
     return $out;
