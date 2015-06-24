@@ -9,8 +9,7 @@ use vars qw( %Lexicon );
 %Lexicon = (
     # config.yaml
     'bit part LLC' => 'bit part 合同会社',
-    'description of SimilarEntries' => 'SimilarEntriesの説明',
-
+    'Make a list of related entries.' => '関連記事をリストアップするプラグイン',
 
     # ContextHandlers.pm
     'The fields modifier is required.' => 'fieldsモディファイアは必須です。'
