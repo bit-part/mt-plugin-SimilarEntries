@@ -5,6 +5,7 @@ use warnings;
 
 use MT::Entry;
 use MT::Tag;
+use File::Spec;
 
 sub plugin {
     return MT->component('SimilarEntries');
@@ -131,6 +132,7 @@ sub hdlr_similar_entries_relate_json {
 sub hdlr_similar_entries_show {
     my ($ctx, $args) = @_;
 
+    my $app = MT->instance;
     my $plugin = plugin();
 
     my $entry = $ctx->stash('entry')
