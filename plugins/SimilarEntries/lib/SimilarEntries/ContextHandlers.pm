@@ -42,6 +42,7 @@ sub hdlr_similar_entries_template_json {
         direction => 'descend',
     };
     my @entries = MT->model('entry')->load($term, $arg);
+    MT::Meta::Proxy->bulk_load_meta_objects(\@entries);
 
     my $json = {};
     foreach my $entry (@entries) {
