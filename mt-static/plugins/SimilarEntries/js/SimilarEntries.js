@@ -85,10 +85,6 @@ similarEntries.show = function(config){
                 else {
                     html += json[similarRankSort[i]['id']];
                 }
-                var eachKey = 'each-' + (i + 1);
-                if (similarEntries['config'][eachKey]) {
-                    html += similarEntries['config'][eachKey];
-                }
                 if (config.last) {
                     if (i == (config.limit - 1) || i == (max - 1)) {
                         html += config.last;

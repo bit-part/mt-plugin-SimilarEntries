@@ -10,31 +10,10 @@ sub plugin {
     return MT->component('SimilarEntries');
 }
 
-use MT::Log;
-use Data::Dumper;
-use File::Basename;
-sub doLog {
-    my ($msg, $code) = @_;
-    return unless defined($msg);
-    my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time);
-    $year += 1900;
-    $mon += 1;
-    # my $now = "$year年$mon月$mday日($youbi[$wday]) $hour時$min分$sec秒\n";
-    my $now = "$year/$mon/$mday $hour:$min:$sec";
-    my $log = MT::Log->new;
-    $log->message("[$now] $msg");
-    $log->metadata($code);
-    $log->save or die $log->errstr;
-}
-
-# doLog(basename(FILE).':'.LINE, Dumper($can_access_blogs));
-
 sub get_setting {
     my ($key, $blog_id, $parent_id) = @_;
-
     my $plugin = plugin();
     my $value = $plugin->get_config_value($key, 'blog:' . $blog_id);
-doLog('$value: '.$value);
     unless ($value) {
         if ($parent_id) {
             $value = $plugin->get_config_value($key, 'blog:' . $parent_id);
@@ -97,12 +76,6 @@ sub hdlr_similar_entries_relate_json {
 
     my @include_blogs = $args->{include_blogs} ? split(/,/, $args->{include_blogs}) : ($blog_id);
 
-    # require MT::App::DataAPI;
-    # require MT::DataAPI::Endpoint::Entry;
-    # my $entries = MT::DataAPI::Resource::Type::ObjectList->new();
-    # my $entries = MT::App::DataAPI->new;
-    # doLog(Dumper($entries));
-
     my $term = {
         blog_id => \@include_blogs,
         status  => MT::Entry::RELEASE(),
@@ -122,12 +95,6 @@ sub hdlr_similar_entries_relate_json {
                 foreach my $tag (@tags) {
                     $tag = _sanitize_key($tag);
                     _entry_id_in_field($json, 'tags', $tag, $entry_id);
-                    # if (defined $json->{tags}->{$tag}) {
-                    #     push(@{$json->{tags}->{$tag}}, $entry_id);
-                    # }
-                    # else {
-                    #     $json->{tags}->{$tag} = [$entry_id];
-                    # }
                 }
             }
         }
@@ -139,12 +106,6 @@ sub hdlr_similar_entries_relate_json {
                     my $label = $category->label;
                     $label = _sanitize_key($label);
                     _entry_id_in_field($json, 'category', $label, $entry_id);
-                    # if (defined $json->{category}->{$label}) {
-                    #     push(@{$json->{category}->{$label}}, $entry_id);
-                    # }
-                    # else {
-                    #     $json->{category}->{$label} = [$entry_id];
-                    # }
                 }
             }
         }
@@ -159,31 +120,9 @@ sub hdlr_similar_entries_relate_json {
             foreach my $key (@values) {
                 $key = _sanitize_key($key);
                 _entry_id_in_field($json, $field, $key, $entry_id);
-                # if (defined $json->{$field}->{$key}) {
-                #     push(@{$json->{$field}->{$key}}, $entry_id);
-                # }
-                # else {
-                #     $json->{$field}->{$key} = [$entry_id];
-                # }
             }
         }
     }
-
-    my $count = @entries;
-    doLog($count);
-    doLog(Dumper($entries[10]));
-
-
-    # if ($include_blogs) {
-    #     foreach ( split(/,/, $include_blogs) ) {
-    #         my $blog = MT->model('blog')->load($_);
-    #         if ($blog) {
-    #             push (@blog_ids);
-    #         }
-    #     }
-    # }
-    # doLog(Dumper($ctx->{__stash}->{blog}->id));
-    # return $include_blogs;
 
     require JSON;
     return JSON::to_json($json);
@@ -273,19 +212,5 @@ sub _sanitize_key {
     $key =~ s/\s//g;
     return $key;
 }
-
-# sub hdlr_if {
-#     my ($ctx, $args, $cond) = @_;
-
-#     1;
-# }
-
-#----- Global filter
-# sub similar_entries {
-#     my ($text, $arg, $ctx) = @_;
-#     $arg or return $text;
-
-#     $text;
-# }
 
 1;
