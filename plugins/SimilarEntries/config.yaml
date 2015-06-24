@@ -6,16 +6,6 @@ plugin_link: https://github.com/bit-part/mt-plugin-SimilarEntries/
 author_name: <__trans phrase='bit part LLC'>
 author_link: http://bit-part.net/
 l10n_class: SimilarEntries::L10N
-config_template: config_template.tmpl
-# blog_config_template: blog_config_template.tmpl
-# system_config_template: system_config_template.tmpl
-settings:
-    related_json_url:
-        default:
-    related_show_json_url:
-        default:
-    similar_entries_show_js:
-        default:
 tags:
     block:
         SimilarEntries: $SimilarEntries::SimilarEntries::ContextHandlers::hdlr_similar_entries
