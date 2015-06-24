@@ -40,10 +40,10 @@ sub hdlr_similar_entries_template_json {
         sort => 'authored_on',
         direction => 'descend',
     };
-    my $iter = MT->model('entry')->load_iter($term, $arg);
+    my @entries = MT->model('entry')->load($term, $arg);
 
     my $json = {};
-    while (my $entry = $iter->()) {
+    foreach my $entry (@entries) {
         local $ctx->{__stash}{entry} = $entry;
         local $ctx->{__stash}{blog} = MT->model('blog')->load($entry->blog_id);
         local $ctx->{current_timestamp} = $entry->authored_on;
