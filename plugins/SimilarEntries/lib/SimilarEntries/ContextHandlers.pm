@@ -180,16 +180,9 @@ sub hdlr_similar_entries_show {
     require JSON;
     my $fields_json_str = JSON::to_json($fields_json);
 
-    my $blog_id = $ctx->stash('blog_id');
-    my $parent_id = $ctx->stash('blog')->parent_id;
     # JavaScript Options
     my $script_url = $args->{script_url} ? $args->{script_url} : File::Spec->catfile($app->static_path, $plugin->envelope, 'js', 'SimilarEntries.js');
 
-    if (my $conf_js = get_setting('similar_entries_show_js', $blog_id, $parent_id)) {
-        return $conf_js;
-    }
-    my $conf_relate = get_setting('related_json_url', $blog_id, $parent_id);
-    my $conf_show = get_setting('related_show_json_url', $blog_id, $parent_id);
 
     my $limit = $args->{limit} ? $args->{limit} : 10;
     my $out = <<"_EOD_";
