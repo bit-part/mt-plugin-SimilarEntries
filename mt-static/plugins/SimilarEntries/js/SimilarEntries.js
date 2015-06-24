@@ -80,7 +80,8 @@ similarEntries.show = function(config){
                     var counter = i + 1;
                     var odd = (counter % 2 == 1);
                     var even = (counter % 2 == 0);
-                    html += config.each(counter, json[similarRankSort[i]['id']], odd, even);
+                    var current = (similarRankSort[i]['id'] == ('e' + config.currentId));
+                    html += config.each(counter, json[similarRankSort[i]['id']], odd, even, current);
                 }
                 else {
                     html += json[similarRankSort[i]['id']];
