@@ -47,7 +47,8 @@ sub hdlr_similar_entries_template_json {
     my $json = {};
     foreach my $entry (@entries) {
         local $ctx->{__stash}{entry} = $entry;
-        local $ctx->{__stash}{blog} = MT->model('blog')->load($entry->blog_id);
+        local $ctx->{__stash}{blog} = $entry->blog;
+        local $ctx->{__stash}{blog_id} = $entry->blog_id;
         local $ctx->{current_timestamp} = $entry->authored_on;
         local $ctx->{modification_timestamp} = $entry->modified_on;
 
