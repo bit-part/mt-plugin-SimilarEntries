@@ -43,6 +43,14 @@ similarEntries.show = function(config){
         var similarIDs = [];
         var similarRank = {};
         var similarRankSort = [];
+        var priority = {};
+        if (config.priority) {
+            var priorityArray = config.priority.split(',');
+            for (var i = 0, l = priorityArray.length; i < l; i++) {
+                var _pri = priorityArray[i].split(':');
+                priority[_pri[0]] = _pri[1];
+            }
+        }
         for (var key1 in config.data) {
             for (var key2 in config['data'][key1]) {
                 if (json[key1][key2]) {
@@ -50,7 +58,14 @@ similarEntries.show = function(config){
                         continue;
                     }
                     else {
-                        Array.prototype.push.apply(similarIDs, json[key1][key2]);
+                        if (priority[key1]) {
+                            for (var i = 0, l = priority[key1]; i < l; i++) {
+                                Array.prototype.push.apply(similarIDs, json[key1][key2]);
+                            }
+                        }
+                        else {
+                            Array.prototype.push.apply(similarIDs, json[key1][key2]);
+                        }
                     }
                 }
             }
