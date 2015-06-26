@@ -201,6 +201,27 @@ SimilarEntries.js ファイルの URL を指定します。
         last="$last">
     </div>
 
+## 料金
+
+「無料プラン」と「商用プラン」の２つを用意し、Movable Type 本体のライセンスを基準に区分けしています。
+
+### 無料プラン
+
+個人無償ライセンス、開発者ライセンスの Movable Type と組み合わせる場合はこちらになります。
+
+No asking, take your own risk.  
+
+### 商用プラン
+
+商用ライセンスの Movable Type と組み合わせる場合は以下の内容になります。
+
+* 10,000円（＋税） / 1インストール（サイト）
+
+ライセンスの購入は下記の「bit part shop」からお願いいたします。
+
+bit part shop  
+[http://bitpart.thebase.in/](http://bitpart.thebase.in/)
+
 ---
 
 MT::Lover::[bitpart](http://bit-part.net/)
