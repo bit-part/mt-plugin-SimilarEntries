@@ -16,26 +16,47 @@ similarEntries.get = function(url, success){
     req.open('get', url, true);
     req.send(null);
 }
-similarEntries.objectSort = function(array, key, order, type){
-    order = (order === 'ascend') ? -1 : 1;
+// array: sort target array
+// sortCondition: array of sort conditions
+//     e.g.
+//     sortCondition = [
+//         {key: 'foo', order: 'descend', type: 'numeric'},
+//         {key: 'bar', order: 'ascend',  type: 'string'}
+//     ];
+similarEntries.objectSort = function(array, sortCondition){
+    for (var i = 0, l = sortCondition.length; i < l; i++) {
+        sortCondition[i]['order'] = (sortCondition[i]['order'] === 'ascend') ? -1 : 1;
+    }
     array.sort(function(obj1, obj2){
-        var v1 = obj1[key];
-        var v2 = obj2[key];
-        if (type === 'numeric') {
-            v1 = v1 - 0;
-            v2 = v2 - 0;
+        for (var i = 0, l = sortCondition.length; i < l; i++) {
+            var key    = sortCondition[i]['key'];
+            var order  = sortCondition[i]['order'];
+            var type   = sortCondition[i]['type'];
+            var value1 = obj1[key];
+            var value2 = obj2[key];
+            if (type === 'numeric') {
+                if (typeof value1 === 'string') {
+                    value1 = value1.replace(/\D/g, '') - 0;
+                }
+                if (typeof value2 === 'string') {
+                    value2 = value2.replace(/\D/g, '') - 0;
+                }
+            }
+            else if (type === 'string') {
+                value1 = '' + value1;
+                value2 = '' + value2;
+            }
+            if (value1 < value2) {
+                return 1 * order;
+            }
+            else if (value1 > value2) {
+                return -1 * order;
+            }
+            else {
+                continue;
+            }
+            return 0;
         }
-        else if (type === 'string') {
-            v1 = '' + v1;
-            v2 = '' + v2;
-        }
-        if (v1 < v2) {
-            return 1 * order;
-        }
-        if (v1 > v2) {
-            return -1 * order;
-        }
-        return 0;
     });
 }
 similarEntries.show = function(config){
@@ -88,7 +109,11 @@ similarEntries.show = function(config){
             obj['count'] = similarRank[key];
             similarRankSort.push(obj);
         }
-        similarEntries.objectSort(similarRankSort, 'count', 'descend');
+        var sortCondition = [
+            { key: 'count', order: 'descend', type: 'numeric'},
+            { key: 'id',    order: 'descend', type: 'numeric'}
+        ];
+        similarEntries.objectSort(similarRankSort, sortCondition);
         var html = '';
         var max = similarRankSort.length;
         similarEntries.get(config.templateURL, function(xhr, json){

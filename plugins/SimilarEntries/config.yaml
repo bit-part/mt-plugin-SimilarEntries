@@ -1,6 +1,6 @@
 id: SimilarEntries
 name: SimilarEntries
-version: 1.0.0
+version: 1.1.0
 description: <__trans phrase='Make a list of related entries.'>
 plugin_link: https://github.com/bit-part/mt-plugin-SimilarEntries/
 author_name: <__trans phrase='bit part LLC'>
