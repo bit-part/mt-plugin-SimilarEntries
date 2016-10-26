@@ -190,7 +190,15 @@ sub hdlr_similar_entries_show {
     my $fields_json_str = JSON::to_json($fields_json);
 
     # JavaScript Options
-    my $script_url = $args->{script_url} ? $args->{script_url} : File::Spec->catfile($app->static_path, $plugin->envelope, 'js', 'SimilarEntries.js');
+    my $script_url = $args->{script_url};
+    unless ($script_url) {
+      if ($app->static_path =~ /^http/) {
+        $script_url = $app->static_path . File::Spec->catfile($plugin->envelope, 'js', 'SimilarEntries.js');
+      }
+      else {
+        $script_url = File::Spec->catfile($app->static_path, $plugin->envelope, 'js', 'SimilarEntries.js');
+      }
+    }
     my $limit = $args->{limit} ? $args->{limit} : 10;
     my $target_selector = $args->{target_selector} || '#similar-entries';
     my $include_current = $args->{include_current} || 0;
