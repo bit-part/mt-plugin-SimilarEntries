@@ -83,7 +83,20 @@ sub hdlr_similar_entries_relate_json {
         blog_id => \@include_blogs,
         status  => MT::Entry::RELEASE(),
     };
-    my @entries = MT->model('entry')->load($term);
+
+    my $load_args = undef;
+    if ($args->{include_categories}) {
+        my @include_categories = split(/,/, $args->{include_categories});
+        $load_args = {
+            join => MT::Placement->join_on(
+                'entry_id',
+                { category_id => \@include_categories },
+                { unique => 1 }
+            )
+        };
+    }
+
+    my @entries = MT->model('entry')->load($term, $load_args);
 
     foreach my $key (split(/,/, $args->{fields})) {
         $json->{$key} = {};

@@ -69,6 +69,12 @@ MTSimilarEntriesRelateJSON タグで利用できるモディファイアは下�
 
     include_blogs="1,2,3"
 
+#### include_categories
+
+特定のカテゴリに属する記事を判定対象としたい場合に、判定対象に含むカテゴリの ID を指定します。複数指定するときはカンマで区切ります。
+
+    include_categories="1,2,3"
+
 ### 関連記事を表示するフォーマットを指定<br> - MTSimilarEntriesTemplateJSON ブロックタグ
 
 関連記事を表示するための HTML を値に持つ JSON ファイルをインデックステンプレートで書き出します。MTSimilarEntriesTemplateJSON ブロックタグの中に表示させたい形のテンプレートを書けば、自動で JSON が作成されます。
