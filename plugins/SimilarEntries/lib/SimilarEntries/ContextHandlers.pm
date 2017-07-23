@@ -41,6 +41,18 @@ sub hdlr_similar_entries_template_json {
         sort => 'authored_on',
         direction => 'descend',
     };
+
+    if ($args->{include_categories}) {
+        my @include_categories = split(/,/, $args->{include_categories});
+        $arg = {
+            join => MT::Placement->join_on(
+                'entry_id',
+                { category_id => \@include_categories },
+                { unique => 1 }
+            )
+        };
+    }
+
     my @entries = MT->model('entry')->load($term, $arg);
     MT::Meta::Proxy->bulk_load_meta_objects(\@entries);
 

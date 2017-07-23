@@ -97,6 +97,12 @@ MTSimilarEntriesTemplateJSON タグで利用できるモディファイアは下
 
 判定対象とするブログの ID を指定します。複数指定するときはカンマで区切ります。
 
+#### include_categories
+
+特定のカテゴリに属する記事を判定対象としたい場合に、判定対象に含むカテゴリの ID を指定します。複数指定するときはカンマで区切ります。
+
+    include_categories="1,2,3"
+
 ### 関連記事を表示する - SimilarEntriesShow ファンクションタグ
 
 #### fields（必須）
