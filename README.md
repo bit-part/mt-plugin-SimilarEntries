@@ -135,7 +135,7 @@ SimilarEntries プラグインは、下記の仕組みで関連記事の判定�
 #### target_selector
 
 関連記事を表示する DOM の CSS セレクターを指定します。
-何も指定しない場合は `#similar-entries` がセットされます。
+何も指定しない場合は `#similar-entries` の要素の中に関連記事を表示します（その要素が存在しない場合はエラーになりますのでご注意ください）。
 
 #### include_current
 
