@@ -45,13 +45,15 @@ SimilarEntries プラグインは、下記の仕組みで関連記事の判定�
 
 ### 関連記事判定用の JSON ファイルを作成<br> - MTSimilarEntriesRelateJSON ファンクションタグ
 
-関連記事を判定するための JSON ファイルをインデックステンプレートで書き出します。JSON は、MTSimilarEntriesRelateJSON タグにいくつかのモディファイアを指定するだけで書き出せます。
+関連記事を判定するための JSON ファイルをインデックステンプレートで書き出します。JSON は、 `MTSimilarEntriesRelateJSON` タグにいくつかのモディファイアを指定するだけで書き出せます。
+
+つまり、具体例を挙げると、下記の `MTSimilarEntriesRelateJSON` タグだけを書き、出力ファイル名が `relation.json` という名前のインデックステンプレートを用意することになります。
 
     <mt:SimilarEntriesRelateJSON
         include_blogs="7"
         fields="tags,keywords,field.text01,category">
 
-MTSimilarEntriesRelateJSON タグで利用できるモディファイアは下記の通りです。
+`MTSimilarEntriesRelateJSON` タグで利用できるモディファイアは下記の通りです。
 
 #### fields（必須）
 
@@ -77,7 +79,9 @@ MTSimilarEntriesRelateJSON タグで利用できるモディファイアは下�
 
 ### 関連記事を表示するフォーマットを指定<br> - MTSimilarEntriesTemplateJSON ブロックタグ
 
-関連記事を表示するための HTML を値に持つ JSON ファイルをインデックステンプレートで書き出します。MTSimilarEntriesTemplateJSON ブロックタグの中に表示させたい形のテンプレートを書けば、自動で JSON が作成されます。
+関連記事を表示するための HTML を値に持つ JSON ファイルをインデックステンプレートで書き出します。 `MTSimilarEntriesTemplateJSON` ブロックタグの中に表示させたい形のテンプレートを書けば、自動で JSON が作成されます。
+
+つまり、具体例を挙げると、下記の `MTSimilarEntriesTemplateJSON` タグだけを書き、出力ファイル名が `template.json` という名前のインデックステンプレートを用意することになります。
 
     <mt:SimilarEntriesTemplateJSON include_blogs="7">
     <li><a href="<mt:EntryPermalink>"><mt:EntryTitle></a>（<mt:BlogName>）［<mt:EntryPrimaryCategory><mt:CategoryLabel></mt:EntryPrimaryCategory>］</li>
@@ -91,7 +95,7 @@ MTSimilarEntriesRelateJSON タグで利用できるモディファイアは下�
         （省略）
     }
 
-MTSimilarEntriesTemplateJSON タグで利用できるモディファイアは下記の通りです。
+`MTSimilarEntriesTemplateJSON` タグで利用できるモディファイアは下記の通りです。
 
 #### include_blogs
 
@@ -107,25 +111,25 @@ MTSimilarEntriesTemplateJSON タグで利用できるモディファイアは下
 
 #### fields（必須）
 
-前述の MTSimilarEntriesRelateJSON タグと同様です。
+前述の `MTSimilarEntriesRelateJSON` タグと同様です。
 
 #### relation_url（必須）
 
-MTSimilarEntriesRelateJSON タグで書き出した関連記事判定用の JSON ファイルの URL を指定します。
+`MTSimilarEntriesRelateJSON` タグで書き出した関連記事判定用の JSON ファイルの URL を指定します。
 
 #### template_url（必須）
 
-MTSimilarEntriesTemplateJSON タグで書き出した関連記事表示用の JSON ファイルの URL を指定します。
+`MTSimilarEntriesTemplateJSON` タグで書き出した関連記事表示用の JSON ファイルの URL を指定します。
 
 #### script_url
 
-SimilarEntries.js ファイルの URL を指定します。
-このモディファイアを指定しない場合は、mt-static/plugins/SimilarEntries/js 内にあるファイルを読み込むようになります。
+`SimilarEntries.js` ファイルの URL を指定します。
+このモディファイアを指定しない場合は、 `mt-static/plugins/SimilarEntries/js` 内にあるファイルを読み込むようになります。
 
 #### limit
 
 関連記事の表示件数を指定します。
-何も指定しない場合は 10 がセットされます。
+何も指定しない場合は `10` がセットされます。
 
 
 #### target_selector
@@ -177,39 +181,45 @@ SimilarEntries.js ファイルの URL を指定します。
 この関数には、`i`、`text`、`odd`、`even`、`current` の5つの引数が渡されます。
 
 - i : ループの回数が渡されます。1 から始まります。
-- text : ループ中の関連記事のテキスト（SimilarEntriesTemplateJSON タグで設定した内容）が渡されます。このテキストを書き換え、 `return text;` すれば表示を細かく制御出来ます。
+- text : ループ中の関連記事のテキスト（ `MTSimilarEntriesTemplateJSON` タグで設定した内容）が渡されます。このテキストを書き換え、 `return text;` すれば表示を細かく制御出来ます。
 - odd : 奇数回目のループの時に `true` が渡されます。
 - even : 偶数回目のループの時に `true` が渡されます。
 - current : ループの関連記事が現在表示されているページの記事である時に `true` が渡されます。
 
 #### 例
 
-    <mt:SetVarBlock name="first"><ul></mt:SetVarBlock>
-    <mt:SetVarBlock name="last"></ul></mt:SetVarBlock>
-    <mt:SetVarBlock name="each_function">
-    function(i, text, odd, even){
-        if (odd) {
-            text = text.replace(/<li/, '<li class="odd"');
-        }
-        else if (even) {
-            text = text.replace(/<li/, '<li class="even"');
-        }
-        if (i % 3 == 0) {
-            text += '</ul><ul>'
-        }
-        return text;
-    }
-    </mt:SetVarBlock>
+```
+<!-- この関連記事を表示するコンテナ要素のセレクターを MTSimilarEntriesShow タグの target_selector モディファイアに指定します。
+     このコンテナ要素は MTSimilarEntriesShow タグより手前に用意します。-->
+<div id="similar-entries"></div>
 
-    <mt:SimilarEntriesShow
-        fields="tags,keywords,field.text01,category"
-        relation_url="http://your-host/SimilarEntries/relation.json"
-        template_url="http://your-host/SimilarEntries/template.json"
-        target_selector="#similar-entries"
-        limit="5"
-        first="$first"
-        last="$last">
-    </div>
+<mt:SetVarBlock name="first"><ul></mt:SetVarBlock>
+<mt:SetVarBlock name="last"></ul></mt:SetVarBlock>
+<mt:SetVarBlock name="each_function">
+function(i, text, odd, even){
+    if (odd) {
+        text = text.replace(/<li/, '<li class="odd"');
+    }
+    else if (even) {
+        text = text.replace(/<li/, '<li class="even"');
+    }
+    if (i % 3 == 0) {
+        text += '</ul><ul>'
+    }
+    return text;
+}
+</mt:SetVarBlock>
+
+<mt:SimilarEntriesShow
+    fields="tags,keywords,field.text01,category"
+    relation_url="http://your-host/SimilarEntries/relation.json"
+    template_url="http://your-host/SimilarEntries/template.json"
+    target_selector="#similar-entries"
+    limit="5"
+    first="$first"
+    last="$last"
+    each_function="$each_function">
+```
 
 ## 料金
 
